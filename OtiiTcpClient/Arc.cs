@@ -351,7 +351,7 @@
         /// Set the main voltage on Arc.
         /// Used when the Otii device is set in constant voltage mode.
         /// </summary>
-        /// <param name="voltage">voltage to set in V.</param>
+        /// <param name="value">voltage to set in V.</param>
         public void SetMainVoltage(double value) {
             var request = new SetMainVoltageRequest(DeviceId, value);
             _client.PostRequest(request);

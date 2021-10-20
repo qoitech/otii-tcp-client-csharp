@@ -155,6 +155,10 @@ namespace Otii {
             return response.Data.Offset;
         }
 
+        /// <summary>
+        /// Returns the offset of the recording.
+        /// </summary>
+        /// <returns></returns>
         public long GetOffset() {
             var request = new GetOffsetRequest(_recordingId);
             var response = _client.PostRequest<GetOffsetRequest, GetOffsetResponse>(request);
