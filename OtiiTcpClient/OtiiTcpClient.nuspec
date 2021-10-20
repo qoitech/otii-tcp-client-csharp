@@ -11,7 +11,7 @@
     <icon>images\icon.png</icon>
     <iconUrl>https://www.qoitech.com/images/otii-128x128.png</iconUrl>
     <description>$description$</description>
-    <releaseNotes>Added documentation.</releaseNotes>
+    <releaseNotes>Added Connect method to OtiiClient.</releaseNotes>
     <copyright>$copyright$</copyright>
     <dependencies>
       <group targetFramework=".NETFramework4.5" />

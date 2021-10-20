@@ -4,16 +4,29 @@ using System.Net.Sockets;
 using Newtonsoft.Json;
 
 namespace Otii {
+    /// <summary>
+    /// OtiiClient is used to create a connection to an Otii TCP server using Connect.
+    /// When connected the Otii API can be accessed through the property Otii.
+    /// </summary>
     public class OtiiClient {
         private const string DefaultServer = "localhost";
         private const int DefaultPort = 1905;
-        private readonly TcpClient _client = null;
-        private readonly NetworkStream _stream = null;
+        private TcpClient _client = null;
+        private NetworkStream _stream = null;
+        private Otii _otii = null;
         private int transId = 0;
 
-        public Otii Otii { get; }
+        /// <summary>
+        /// The Otii API.
+        /// </summary>
+        public Otii Otii { get { return _otii;  } }
 
-        public OtiiClient(string server = DefaultServer, int port = DefaultPort) {
+        /// <summary>
+        /// Connect to an Otii TCP Server
+        /// </summary>
+        /// <param name="server">server address (default localhost).</param>
+        /// <param name="port">port number (default 1905).</param>
+        public void Connect(string server = DefaultServer, int port = DefaultPort) {
             _client = new TcpClient(server, port);
             _stream = _client.GetStream();
 
@@ -25,14 +38,20 @@ namespace Otii {
             Console.WriteLine($"Version: {status.Data.OtiiVersion}");
             Console.WriteLine($"Protocol version: {status.Data.ProtocolVersion}");
 
-            Otii = new Otii(this);
+            _otii = new Otii(this);
         }
 
+        /// <summary>
+        /// Close the connection.
+        /// </summary>
         public void Close() {
             _stream.Close();
             _client.Close();
         }
 
+        /// <summary>
+        /// Exception thrown when the server is unexcepctedly disconnected.
+        /// </summary>
         public class DisconnectedException : Exception {
         }
 
