@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("OneDutyCycleEnergy")]
+[assembly: AssemblyTitle("OneDutyCycleMeasurement")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("OneDutyCycleEnergy")]
+[assembly: AssemblyProduct("OneDutyCycleMeasurement")]
 [assembly: AssemblyCopyright("Copyright © Qoitech AB 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
