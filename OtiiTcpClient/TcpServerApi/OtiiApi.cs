@@ -22,6 +22,58 @@ namespace Otii {
             public ProjectData Data { get; set; }
         }
 
+        private class GetBatteryProfileInfoRequest : Request {
+            public class GetBatteryProfileInfoData {
+                [JsonProperty("battery_profile_id")]
+                public string BatteryProfileId { get; set; }
+
+                public GetBatteryProfileInfoData(string batteryProfileId) {
+                    BatteryProfileId = batteryProfileId;
+                }
+            }
+
+            [JsonProperty("data")]
+            public GetBatteryProfileInfoData Data { get; set; }
+
+            public GetBatteryProfileInfoRequest(string batteryProfileId) : base("otii_get_battery_profile_info") {
+                Data = new GetBatteryProfileInfoData(batteryProfileId);
+            }
+        }
+
+        private class GetBatteryProfileInfoResponse : Response {
+            public class GetBatteryProfileInfoResponseData {
+                [JsonProperty("battery_profile_id")]
+                public string BatteryProfileId { get; set; }
+
+                [JsonProperty("name")]
+                public string Name { get; set; }
+
+                [JsonProperty("battery")]
+                public BatteryData Battery { get; set; }
+
+                [JsonProperty("discharge_tables")]
+                public DischargeTableData[] DischargeTables { get; set; }
+            }
+
+            [JsonProperty("data")]
+            public GetBatteryProfileInfoResponseData Data { get; set; }
+        }
+
+        private class GetBatteryProfilesRequest : Request {
+            public GetBatteryProfilesRequest() : base("otii_get_battery_profiles") {
+            }
+        }
+
+        private class GetBatteryProfilesResponse : Response {
+            public class BatteryProfilesData {
+                [JsonProperty("battery_profiles")]
+                public BatteryProfileData[] BatteryProfiles { get; set; }
+            }
+
+            [JsonProperty("data")]
+            public BatteryProfilesData Data { get; set; }
+        }
+
         private class GetDeviceIdRequest : Request {
             public class GetDeviceIdData {
                 [JsonProperty("device_name")]
@@ -115,7 +167,7 @@ namespace Otii {
             }
         }
 
-        private class LogoutRequest: Request {
+        private class LogoutRequest : Request {
             public LogoutRequest() : base("otii_logout") {
             }
         }
@@ -262,6 +314,116 @@ namespace Otii {
         private class AddonAttribute {
             [JsonProperty("channels")]
             public int Channels { get; set; }
+        }
+
+        private class BatteryProfileData {
+            [JsonProperty("battery_profile_id")]
+            public string BatteryProfileId { get; set; }
+
+            [JsonProperty("name")]
+            public string Name { get; set; }
+
+            [JsonProperty("manufacturer")]
+            public string Manufacturer { get; set; }
+
+            [JsonProperty("model")]
+            public string Model { get; set; }
+        }
+
+        private class BatteryData {
+            [JsonProperty("capacity")]
+            public long Capacity { get; set; }
+
+            [JsonProperty("capacityunit")]
+            public string CapacityUnit { get; set; }
+
+            [JsonProperty("cutoffvoltage")]
+            public long CutoffVoltage { get; set; }
+
+            [JsonProperty("manufacturer")]
+            public string Manufacturer { get; set; }
+
+            [JsonProperty("maxtemperature")]
+            public long MaxTemperature { get; set; }
+
+            [JsonProperty("mintemperature")]
+            public long MinTemperature { get; set; }
+
+            [JsonProperty("model")]
+            public string Model { get; set; }
+
+            [JsonProperty("size")]
+            public string Size { get; set; }
+
+            [JsonProperty("sizeunit")]
+            public string SizeUnit { get; set; }
+
+            [JsonProperty("voltage")]
+            public long Voltage { get; set; }
+
+            [JsonProperty("voltageunit")]
+            public string VoltageUnit { get; set; }
+        }
+
+        private class DischargeTableData {
+            [JsonProperty("id")]
+            public string Id { get; set; }
+
+            [JsonProperty("starttime")]
+            public string StartTime { get; set; }
+
+            [JsonProperty("stoptime")]
+            public string StopTime { get; set; }
+
+            [JsonProperty("device")]
+            public DishargeDeviceData Device { get; set; }
+        }
+
+        private class DishargeDeviceData {
+            [JsonProperty("type")]
+            public string Type { get; set; }
+
+            [JsonProperty("id")]
+            public string Id { get; set; }
+
+            [JsonProperty("hardwareId")]
+            public string HardwareId { get; set; }
+
+            [JsonProperty("firmwareVersion")]
+            public string FirmwareVersion { get; set; }
+        }
+
+        private class DischargeProfileData {
+            [JsonProperty("low")]
+            public DischargeStepInfoData Low { get; set; }
+
+            [JsonProperty("high")]
+            public DischargeStepInfoData High { get; set; }
+
+            [JsonProperty("exitConditions")]
+            public ExitConditionsData ExitConditions { get; set; }
+        }
+
+        private class DischargeStepInfoData {
+            [JsonProperty("mode")]
+            public string Mode { get; set; }
+
+            [JsonProperty("value")]
+            public long Value { get; set; }
+
+            [JsonProperty("time")]
+            public long Time { get; set; }
+        }
+
+        private class ExitConditionsData {
+            [JsonProperty("voltage")]
+            public long Voltage { get; set; }
+
+            [JsonProperty("ocv")]
+            public long Ocv { get; set; }
+
+            [JsonProperty("iterations")]
+            public long Iterations { get; set; }
         }
     }
 }

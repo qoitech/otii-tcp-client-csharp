@@ -43,6 +43,15 @@ namespace Otii {
             public string Model { get; set; }
         }
 
+        private class AddToProjectRequest : Request {
+            [JsonProperty("data")]
+            public ArcRequestData Data { get; set; }
+
+            public AddToProjectRequest(string deviceId) : base("arc_add_to_project") {
+                Data = new ArcRequestData(deviceId);
+            }
+        }
+
         private class CalibrateRequest : Request {
             [JsonProperty("data")]
             public ArcRequestData Data { get; set; }
@@ -286,82 +295,6 @@ namespace Otii {
             public GetSourceCurrentLimitEnabledResponseData Data { get; set; }
         }
 
-        private class GetSuppliesRequest : Request {
-            [JsonProperty("data")]
-            public ArcRequestData Data { get; set; }
-
-            public GetSuppliesRequest(string deviceId) : base("arc_get_supplies") {
-                Data = new ArcRequestData(deviceId);
-            }
-        }
-
-        private class GetSuppliesResponse : Response {
-            public class GetSuppliesResponseData {
-                [JsonProperty("supplies")]
-                public SupplyData[] Supplies { get; set; }
-            }
-
-            [JsonProperty("data")]
-            public GetSuppliesResponseData Data { get; set; }
-        }
-
-        private class GetSupplyRequest : Request {
-            [JsonProperty("data")]
-            public ArcRequestData Data { get; set; }
-
-            public GetSupplyRequest(string deviceId) : base("arc_get_supply") {
-                Data = new ArcRequestData(deviceId);
-            }
-        }
-
-        private class GetSupplyResponse : Response {
-            public class GetSupplyResponseData {
-                [JsonProperty("supply_id")]
-                public int SupplyId { get; set; }
-            }
-
-            [JsonProperty("data")]
-            public GetSupplyResponseData Data { get; set; }
-        }
-
-        private class GetSupplyParallelRequest : Request {
-            [JsonProperty("data")]
-            public ArcRequestData Data { get; set; }
-
-            public GetSupplyParallelRequest(string deviceId) : base("arc_get_supply_parallel") {
-                Data = new ArcRequestData(deviceId);
-            }
-        }
-
-        private class GetSupplyParallelResponse : Response {
-            public class GetSupplyParallelResponseData {
-                [JsonProperty("value")]
-                public int Value { get; set; }
-            }
-
-            [JsonProperty("data")]
-            public GetSupplyParallelResponseData Data { get; set; }
-        }
-
-        private class GetSupplySeriesRequest : Request {
-            [JsonProperty("data")]
-            public ArcRequestData Data { get; set; }
-
-            public GetSupplySeriesRequest(string deviceId) : base("arc_get_supply_series") {
-                Data = new ArcRequestData(deviceId);
-            }
-        }
-
-        private class GetSupplySeriesResponse : Response {
-            public class GetSupplySeriesResponseData {
-                [JsonProperty("value")]
-                public int Value { get; set; }
-            }
-
-            [JsonProperty("data")]
-            public GetSupplySeriesResponseData Data { get; set; }
-        }
-
         private class GetUartBaudrateRequest : Request {
             [JsonProperty("data")]
             public ArcRequestData Data { get; set; }
@@ -598,21 +531,88 @@ namespace Otii {
             }
         }
 
-        private class SetTxRequest : Request {
-            public class SetTxRequestData : ArcRequestData {
-                [JsonProperty("value")]
-                public bool Value { get; set; }
+        private class SetSupplyBatteryEmulatorRequest : Request {
+            public class SetSupplyBatteryEmulatorRequestData : ArcRequestData {
+                [JsonProperty("battery_profile_id")]
+                public string BatteryProfileId { get; set; }
 
-                public SetTxRequestData(string deviceId, bool value) : base(deviceId) {
-                    Value = value;
+                [JsonProperty("series")]
+                public long Series { get; set; }
+
+                [JsonProperty("parallel")]
+                public long Parallel { get; set; }
+
+                [JsonProperty("used_capacity")]
+                public long UsedCapacity { get; set; }
+
+                [JsonProperty("soc")]
+                public long Soc { get; set; }
+
+                [JsonProperty("soc_tracking")]
+                public bool SocTracking { get; set; }
+
+                public SetSupplyBatteryEmulatorRequestData(
+                    string deviceId,
+                    string batteryProfileId,
+                    long series,
+                    long parallel,
+                    long usedCapacity,
+                    long soc,
+                    bool socTracking
+                ) : base(deviceId) {
+                    BatteryProfileId = batteryProfileId;
+                    Series = series;
+                    Parallel = parallel;
+                    if (usedCapacity != 0) {
+                        UsedCapacity = usedCapacity;
+                    }
+                    if (soc != 100) {
+                        Soc = soc;
+                    }
+                    SocTracking = socTracking;
                 }
             }
 
             [JsonProperty("data")]
-            public SetTxRequestData Data { get; set; }
+            public SetSupplyBatteryEmulatorRequestData Data { get; set; }
 
-            public SetTxRequest(string deviceId, bool value) : base("arc_set_tx") {
-                Data = new SetTxRequestData(deviceId, value);
+            public SetSupplyBatteryEmulatorRequest(
+                string deviceId,
+                string batteryProfileId,
+                long series,
+                long parallel,
+                long usedCapacity,
+                long soc,
+                bool socTracking
+            ) : base("arc_set_supply_battery_emulator") {
+                Data = new SetSupplyBatteryEmulatorRequestData(
+                    deviceId,
+                    batteryProfileId,
+                    series,
+                    parallel,
+                    usedCapacity,
+                    soc,
+                    socTracking
+                );
+            }
+        }
+
+        private class SetSupplyBatteryEmulatorResponse : Response {
+            public class SetSupplyBatteryEmulatorResponseData {
+                [JsonProperty("battery_emulator_id")]
+                public string BatteryEmulatorId { get; set; }
+            }
+
+            [JsonProperty("data")]
+            public SetSupplyBatteryEmulatorResponseData Data { get; set; }
+        }
+
+        private class SetSupplyPowerBoxRequest : Request {
+            [JsonProperty("data")]
+            public ArcRequestData Data { get; set; }
+
+            public SetSupplyPowerBoxRequest(string deviceId) : base("arc_set_supply_power_box") {
+                Data = new ArcRequestData(deviceId);
             }
         }
 
@@ -634,21 +634,21 @@ namespace Otii {
             }
         }
 
-        private class SetSupplyRequest : Request {
-            public class SetSupplyRequestData : ArcRequestData {
-                [JsonProperty("supply_id")]
-                public int SupplyId { get; set; }
+        private class SetTxRequest : Request {
+            public class SetTxRequestData : ArcRequestData {
+                [JsonProperty("value")]
+                public bool Value { get; set; }
 
-                public SetSupplyRequestData(string deviceId, int supplyId) : base(deviceId) {
-                    SupplyId = supplyId;
+                public SetTxRequestData(string deviceId, bool value) : base(deviceId) {
+                    Value = value;
                 }
             }
 
             [JsonProperty("data")]
-            public SetSupplyRequestData Data { get; set; }
+            public SetTxRequestData Data { get; set; }
 
-            public SetSupplyRequest(string deviceId, int supplyId) : base("arc_set_supply") {
-                Data = new SetSupplyRequestData(deviceId, supplyId);
+            public SetTxRequest(string deviceId, bool value) : base("arc_set_tx") {
+                Data = new SetTxRequestData(deviceId, value);
             }
         }
 

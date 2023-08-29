@@ -40,6 +40,14 @@ namespace Otii {
         }
 
         /// <summary>
+        /// Add device to current project.
+        /// </summary>
+        public void AddToProject() {
+            var request = new AddToProjectRequest(DeviceId);
+            _client.PostRequest(request);
+        }
+
+        /// <summary>
         /// Perform internal calibration of an Arc device.
         /// </summary>
         public void Calibrate() {
@@ -265,47 +273,6 @@ namespace Otii {
         }
 
         /// <summary>
-        /// Get a list of all available supplies for the device. Supply id 0 always refers to the power box.
-        /// </summary>
-        /// <returns>List of supplies</returns>
-        public Supply[] GetSupplies() {
-            var request = new GetSuppliesRequest(DeviceId);
-            var response = _client.PostRequest<GetSuppliesRequest, GetSuppliesResponse>(request);
-            var supplies = response.Data.Supplies.Select(supply => new Supply(supply.SupplyId, supply.Name, supply.Manufacturer, supply.Model));
-            return supplies.ToArray();
-        }
-
-        /// <summary>
-        /// Get current power supply id.
-        /// </summary>
-        /// <returns>the current supply id.</returns>
-        public int GetSupply() {
-            var request = new GetSupplyRequest(DeviceId);
-            var response = _client.PostRequest<GetSupplyRequest, GetSupplyResponse>(request);
-            return response.Data.SupplyId;
-        }
-
-        /// <summary>
-        /// Get current number of simulated batteries in parallel.
-        /// </summary>
-        /// <returns>the number of batteries in parallel.</returns>
-        public int GetSupplyParallel() {
-            var request = new GetSupplyParallelRequest(DeviceId);
-            var response = _client.PostRequest<GetSupplyParallelRequest, GetSupplyParallelResponse>(request);
-            return response.Data.Value;
-        }
-
-        /// <summary>
-        /// Get current number of simulated batteries in series.
-        /// </summary>
-        /// <returns>the number of batteries in series.</returns>
-        public int GetSupplySeries() {
-            var request = new GetSupplySeriesRequest(DeviceId);
-            var response = _client.PostRequest<GetSupplySeriesRequest, GetSupplySeriesResponse>(request);
-            return response.Data.Value;
-        }
-
-        /// <summary>
         /// Get the UART baud rate.
         /// </summary>
         /// <returns>the requested baud rate.</returns>
@@ -451,11 +418,40 @@ namespace Otii {
         }
 
         /// <summary>
-        /// Set power supply type.
+        /// Set power supply to battery emulator.
         /// </summary>
-        /// <param name="supplyId"></param>
-        public void SetSupply(int supplyId) {
-            var request = new SetSupplyRequest(DeviceId, supplyId);
+        /// <param name="batteryProfileId">Id of battery profile to emulate</param>
+        /// <param name="series">number of batteries in series</param>
+        /// <param name="parallel">number of batteries in parallel</param>
+        /// <param name="usedCapacity">Used capacity</param>
+        /// <param name="soc">State of Charge</param>
+        /// <param name="socTracking">State of Charge tracking</param>
+        public BatteryEmulator SetSupplyBatteryEmulator(
+            string batteryProfileId,
+            long series = 1,
+            long parallel = 1,
+            long usedCapacity = 0,
+            long soc = 100,
+            bool socTracking = true
+        ) {
+            var request = new SetSupplyBatteryEmulatorRequest(
+                DeviceId,
+                batteryProfileId,
+                series,
+                parallel,
+                usedCapacity,
+                soc,
+                socTracking
+            );
+            var response = _client.PostRequest<SetSupplyBatteryEmulatorRequest, SetSupplyBatteryEmulatorResponse>(request);
+            return new BatteryEmulator(_client, response.Data.BatteryEmulatorId);
+        }
+
+        /// <summary>
+        /// Set power supply to power box.
+        /// </summary>
+        public void SetSupplyPowerBox() {
+            var request = new SetSupplyPowerBoxRequest(DeviceId);
             _client.PostRequest(request);
         }
 
