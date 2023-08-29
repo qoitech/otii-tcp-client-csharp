@@ -78,6 +78,48 @@ namespace Otii {
             public DevicesData Data { get; set; }
         }
 
+        private class GetLicensesRequest : Request {
+            public GetLicensesRequest() : base("otii_get_licenses") {
+            }
+        }
+
+        private class GetLicensesResponse : Response {
+            public class LicensesData {
+                [JsonProperty("licenses")]
+                public LicenseData[] Licenses { get; set; }
+            }
+
+            [JsonProperty("data")]
+            public LicensesData Data { get; set; }
+        }
+
+        private class LoginRequest : Request {
+            public class LoginRequestData {
+                [JsonProperty("username")]
+                public string Username { get; set; }
+
+                [JsonProperty("password")]
+                public string Password { get; set; }
+
+                public LoginRequestData(string username, string password) {
+                    Username = username;
+                    Password = password;
+                }
+            }
+
+            [JsonProperty("data")]
+            public LoginRequestData Data { get; set; }
+
+            public LoginRequest(string username, string password) : base("otii_login") {
+                Data = new LoginRequestData(username, password);
+            }
+        }
+
+        private class LogoutRequest: Request {
+            public LogoutRequest() : base("otii_logout") {
+            }
+        }
+
         private class OpenProjectRequest : Request {
             public class OpenProjectRequestData {
                 [JsonProperty("filename")]
@@ -112,6 +154,42 @@ namespace Otii {
 
             [JsonProperty("data")]
             public OpenProjectResponseData Data { get; set; }
+        }
+
+        private class ReserveLicenseRequest : Request {
+            public class ReserveLicenseRequestData {
+                [JsonProperty("license_id")]
+                public int LicenseId { get; set; }
+
+                public ReserveLicenseRequestData(int licenseId) {
+                    LicenseId = licenseId;
+                }
+            }
+
+            [JsonProperty("data")]
+            public ReserveLicenseRequestData Data { get; set; }
+
+            public ReserveLicenseRequest(int licenseId) : base("otii_reserve_license") {
+                Data = new ReserveLicenseRequestData(licenseId);
+            }
+        }
+
+        private class ReturnLicenseRequest : Request {
+            public class ReturnLicenseRequestData {
+                [JsonProperty("license_id")]
+                public int LicenseId { get; set; }
+
+                public ReturnLicenseRequestData(int licenseId) {
+                    LicenseId = licenseId;
+                }
+            }
+
+            [JsonProperty("data")]
+            public ReturnLicenseRequestData Data { get; set; }
+
+            public ReturnLicenseRequest(int licenseId) : base("otii_return_license") {
+                Data = new ReturnLicenseRequestData(licenseId);
+            }
         }
 
         private class SetAllMainRequest : Request {
@@ -151,6 +229,39 @@ namespace Otii {
 
             [JsonProperty("type")]
             public string Type { get; set; }
+        }
+
+        private class LicenseData {
+            [JsonProperty("id")]
+            public int Id { get; set; }
+
+            [JsonProperty("type")]
+            public string Type { get; set; }
+
+            [JsonProperty("available")]
+            public bool Available { get; set; }
+
+            [JsonProperty("reserved_to")]
+            public string ReservedTo { get; set; }
+
+            [JsonProperty("hostname")]
+            public string Hostname { get; set; }
+
+            [JsonProperty("addons")]
+            public Addon[] Addons { get; set; }
+        }
+
+        private class Addon {
+            [JsonProperty("id")]
+            public string Id { get; set; }
+
+            [JsonProperty("attributes")]
+            public AddonAttribute Attributes { get; set; }
+        }
+
+        private class AddonAttribute {
+            [JsonProperty("channels")]
+            public int Channels { get; set; }
         }
     }
 }

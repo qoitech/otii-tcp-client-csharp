@@ -33,10 +33,6 @@ namespace Otii {
             var streamReader = new StreamReader(_stream, System.Text.Encoding.UTF8);
             var responseData = streamReader.ReadLine();
             ServerStatus status = JsonConvert.DeserializeObject<ServerStatus>(responseData);
-            Console.WriteLine($"Type: {status.Type}");
-            Console.WriteLine($"Info: {status.Info}");
-            Console.WriteLine($"Version: {status.Data.OtiiVersion}");
-            Console.WriteLine($"Protocol version: {status.Data.ProtocolVersion}");
 
             _otii = new Otii(this);
         }

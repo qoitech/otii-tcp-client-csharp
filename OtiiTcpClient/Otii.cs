@@ -11,6 +11,24 @@ namespace Otii {
             _client = client;
         }
 
+        public class License {
+            public int Id;
+            public string Type;
+            public bool Available;
+            public string ReservedTo;
+            public string Hostname;
+            public string[] AddonTypes;
+
+            public License(int id, string type, bool available, string reservedTo, string hostname, string[] addonTypes) {
+                Id = id;
+                Type = type;
+                Available = available;
+                ReservedTo = reservedTo;
+                Hostname = hostname;
+                AddonTypes = addonTypes;
+            }
+        }
+
         /// <summary>
         /// Create a new project.
         /// </summary>
@@ -56,6 +74,44 @@ namespace Otii {
         }
 
         /// <summary>
+        /// Get a list of all licenses for the logged in user.
+        /// </summary>
+        /// <returns>A list of all licenses.</returns>
+        public License[] GetLicenses() {
+            var request = new GetLicensesRequest();
+            var response = _client.PostRequest<GetLicensesRequest, GetLicensesResponse>(request);
+            var licenses = response.Data.Licenses.Select(license => new License(
+                license.Id,
+                license.Type,
+                license.Available,
+                license.ReservedTo,
+                license.Hostname,
+                license.Addons.Select(addon => addon.Id).ToArray()
+            ));
+            return licenses.ToArray();
+        }
+
+        /// <summary>
+        /// Login to license server.
+        /// </summary>
+        /// <param name="username">username.</param>
+        /// <param name="password">password.</param>
+        /// <returns></returns>
+        public void Login(string username, string password) {
+            var request = new LoginRequest(username, password);
+            _client.PostRequest(request);
+        }
+
+        /// <summary>
+        /// Logout from license server.
+        /// </summary>
+        /// <returns></returns>
+        public void Logout() {
+            var request = new LogoutRequest();
+            _client.PostRequest(request);
+        }
+
+        /// <summary>
         /// Open an existing project.
         /// </summary>
         /// <param name="filename">path to the project.</param>
@@ -67,6 +123,26 @@ namespace Otii {
             var response = _client.PostRequest<OpenProjectRequest, OpenProjectResponse>(request);
             var projectId = response.Data.ProjectId;
             return projectId == -1 ? null : new Project(_client, projectId);
+        }
+
+        /// <summary>
+        /// Reserve license.
+        /// </summary>
+        /// <param name="licenseId">License id to reserve.</param>
+        /// <returns></returns>
+        public void ReserveLicense(int licenseId) {
+            var request = new ReserveLicenseRequest(licenseId);
+            _client.PostRequest(request);
+        }
+
+        /// <summary>
+        /// Return license.
+        /// </summary>
+        /// <param name="licenseId">License id to return.</param>
+        /// <returns></returns>
+        public void ReturnLicense(int licenseId) {
+            var request = new ReturnLicenseRequest(licenseId);
+            _client.PostRequest(request);
         }
 
         /// <summary>
