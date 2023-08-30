@@ -48,6 +48,34 @@ namespace Otii {
             }
         }
 
+        public class ChannelInfo {
+            public double Offset;
+            public double From;
+            public double To;
+            public long SampleRate;
+
+            public ChannelInfo(double offset, double from, double to, long sampleRate) {
+                Offset = offset;
+                From = from;
+                To = to;
+                SampleRate = sampleRate;
+            }
+        }
+
+        public class ChannelStatistics {
+            public double Min;
+            public double Max;
+            public double Average;
+            public double Energy;
+
+            public ChannelStatistics(double min, double max, double average, double energy) {
+                Min = min;
+                Max = max;
+                Average = average;
+                Energy = energy;
+            }
+        }
+
         /// <summary>
         /// Delete a recording.
         /// </summary>
@@ -141,6 +169,34 @@ namespace Otii {
                 data = data.Select(d => new LogData(d.Timestamp, new string(d.Value.Where(c => !char.IsControl(c)).ToArray())));
             }
             return data.ToArray();
+        }
+
+        /// <summary>
+        /// Returns information about the channel.
+        /// </summary>
+        /// <param name="deviceId">device id of the capturing device. Exclude for imported logs.</param>
+        /// <param name="channel">the channel name. For imported logs, use the log_id returned by import_log.</param>
+        /// <returns></returns>
+        public ChannelInfo GetChannelInfo(string deviceId, string channel) {
+            var request = new GetChannelInfoRequest(_recordingId, deviceId, channel);
+            var response = _client.PostRequest<GetChannelInfoRequest, GetIChannelnfoResponse>(request);
+            var data = response.Data;
+            return new ChannelInfo(data.Offset, data.From, data.To, data.SampleRate);
+        }
+
+        /// <summary>
+        /// Returns statistics about the channel.
+        /// </summary>
+        /// <param name="deviceId">device id of the capturing device.</param>
+        /// <param name="channel">the channel name.</param>
+        /// <param name="from">from time.</param>
+        /// <param name="to">from time.</param>
+        /// <returns></returns>
+        public ChannelStatistics GetChannelStatistics(string deviceId, string channel, double from, double to) {
+            var request = new GetChannelStatisticsRequest(_recordingId, deviceId, channel, from, to);
+            var response = _client.PostRequest<GetChannelStatisticsRequest, GetChannelStatisticsResponse>(request);
+            var data = response.Data;
+            return new ChannelStatistics(data.Min, data.Max, data.Average, data.Energy);
         }
 
         /// <summary>

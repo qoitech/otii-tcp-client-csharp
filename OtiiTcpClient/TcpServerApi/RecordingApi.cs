@@ -181,6 +181,75 @@ namespace Otii {
             public GetLogChannelDataResponseData Data { get; set; }
         }
 
+        private class GetChannelInfoRequest : Request {
+            [JsonProperty("data")]
+            public ChannelRequestData Data { get; set; }
+
+            public GetChannelInfoRequest(int recordingId, string deviceId, string channel) : base("recording_get_channel_info") {
+                Data = new ChannelRequestData(recordingId, deviceId, channel);
+            }
+        }
+
+        private class GetIChannelnfoResponse : Response {
+            public class GetChannelInfoResponseData {
+                [JsonProperty("offset")]
+                public double Offset { get; set; }
+
+                [JsonProperty("from")]
+                public double From { get; set; }
+
+                [JsonProperty("to")]
+                public double To { get; set; }
+
+                [JsonProperty("sample_rate")]
+                public long SampleRate { get; set; }
+            }
+
+            [JsonProperty("data")]
+            public GetChannelInfoResponseData Data { get; set; }
+        }
+
+        private class GetChannelStatisticsRequest : Request {
+            public class GetChannelStatisticsRequestData : ChannelRequestData {
+                [JsonProperty("from")]
+                public double From { get; set; }
+
+                [JsonProperty("to")]
+                public double To { get; set; }
+
+                public GetChannelStatisticsRequestData(int recordingId, string deviceId, string channel, double from, double to) : base(recordingId, deviceId, channel) {
+                    From = from;
+                    To = to;
+                }
+            }
+
+            [JsonProperty("data")]
+            public GetChannelStatisticsRequestData Data { get; set; }
+
+            public GetChannelStatisticsRequest(int recordingId, string deviceId, string channel, double from, double to) : base("recording_get_channel_statistics") {
+                Data = new GetChannelStatisticsRequestData(recordingId, deviceId, channel, from, to);
+            }
+        }
+
+        private class GetChannelStatisticsResponse : Response {
+            public class GetChannelStatisticsResponseData {
+                [JsonProperty("min")]
+                public double Min { get; set; }
+
+                [JsonProperty("max")]
+                public double Max { get; set; }
+
+                [JsonProperty("average")]
+                public double Average { get; set; }
+
+                [JsonProperty("energy")]
+                public double Energy { get; set; }
+            }
+
+            [JsonProperty("data")]
+            public GetChannelStatisticsResponseData Data { get; set; }
+        }
+
         private class GetLogOffsetRequest : Request {
             [JsonProperty("data")]
             public ChannelRequestData Data { get; set; }
