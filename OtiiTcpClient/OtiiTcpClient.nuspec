@@ -11,13 +11,15 @@
     <icon>images\icon.png</icon>
     <iconUrl>https://www.qoitech.com/images/otii-128x128.png</iconUrl>
     <description>$description$</description>
-    <releaseNotes>Added Connect method to OtiiClient.</releaseNotes>
+    <releaseNotes>Added API for license handling and recording statistics in Otii 3.0</releaseNotes>
     <copyright>$copyright$</copyright>
+    <readme>README.md</readme>
     <dependencies>
       <group targetFramework=".NETFramework4.5" />
     </dependencies>
   </metadata>
   <files>
     <file src=".\images\icon.png" target="images\" />
+    <file src=".\README.md"  />
   </files>
 </package>
