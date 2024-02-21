@@ -5,16 +5,23 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
+    <AnalysisLevel>latest-all</AnalysisLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyTitle>Otii Tcp Client</AssemblyTitle>
-    <Version>1.0.5</Version>
-    <Description>Otii TCP Client to be used with Otii Automation Toolbox.</Description>
+    <AssemblyVersion>1.0.5</AssemblyVersion>
+    <Title>Otii Tcp Client</Title>
+    <Authors>qoitech</Authors>
     <Company>Qoitech AB</Company>
     <Product>OtiiTcpClient</Product>
+    <Description>Otii TCP Client to be used with Otii Automation Toolbox.</Description>
     <Copyright>Copyright © 2023</Copyright>
+    <PackageProjectUrl>https://github.com/qoitech/otii-tcp-client-csharp</PackageProjectUrl>
     <PackageIcon>icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>Added API for license handling and recording statistics in Otii 3.0</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <AssemblyTitle>$(Title)</AssemblyTitle>
+    <VersionPrefix>$(AssemblyVersion)</VersionPrefix>
   </PropertyGroup>
   <ItemGroup>
     <None Update="icon.png">
