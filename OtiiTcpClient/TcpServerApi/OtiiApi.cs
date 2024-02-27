@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Otii {
+namespace OtiiTcpClient {
     public partial class Otii {
         private class CreateProjectRequest : Request {
             public CreateProjectRequest() : base("otii_create_project") {

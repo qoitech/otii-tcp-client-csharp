@@ -1,6 +1,10 @@
-﻿using System;
+﻿
+
+using OtiiTcpClient;
+using OtiiTcpClient.Types;
+using System;
 using System.Threading;
-using Otii;
+
 
 namespace BasicMeasurement {
     class Program {
@@ -8,6 +12,7 @@ namespace BasicMeasurement {
 
         static void Main(string[] args) {
             // Calling Connect without parameters will connect to a local instance of Otii
+
             var client = new OtiiClient();
             client.Connect();
 
@@ -33,10 +38,10 @@ namespace BasicMeasurement {
             arc.SetMaxCurrent(0.5);
             arc.EnableUart(true);
             arc.SetUartBaudrate(115200);
-            arc.EnableChannel("mc", true);
-            arc.EnableChannel("mv", true);
-            arc.EnableChannel("rx", true);
-            arc.EnableChannel("i1", true);
+            arc.EnableChannel(Channel.MainCurrent, true);
+            arc.EnableChannel(Channel.MainVoltage, true);
+            arc.EnableChannel(Channel.UartLogs, true);
+            arc.EnableChannel(Channel.Gpi1, true);
 
             // Record
             project.StartRecording();

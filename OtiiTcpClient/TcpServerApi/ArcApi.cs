@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
+using OtiiTcpClient.Types;
 
-namespace Otii {
+namespace OtiiTcpClient {
     public partial class Arc {
         private class ArcRequestData {
             [JsonProperty("device_id")]
@@ -73,9 +74,9 @@ namespace Otii {
         private class EnableChannelRequest : Request {
             public class EnableChannelData : EnableRequestData {
                 [JsonProperty("channel")]
-                public string Channel { get; set; }
+                public Channel Channel { get; set; }
 
-                public EnableChannelData(string deviceId, string channel, bool enable) : base(deviceId, enable) {
+                public EnableChannelData(string deviceId, Channel channel, bool enable) : base(deviceId, enable) {
                     Channel = channel;
                 }
             }
@@ -83,7 +84,7 @@ namespace Otii {
             [JsonProperty("data")]
             public EnableChannelData Data { get; set; }
 
-            public EnableChannelRequest(string deviceId, string channel, bool enable) : base("arc_enable_channel") {
+            public EnableChannelRequest(string deviceId, Channel channel, bool enable) : base("arc_enable_channel") {
                 Data = new EnableChannelData(deviceId, channel, enable);
             }
         }
@@ -118,7 +119,7 @@ namespace Otii {
         private class Get4WireResponse : Response {
             public class Get4WireResponseData {
                 [JsonProperty("value")]
-                public string Value { get; set; }
+                public Arc4WireState Value { get; set; }
             }
 
             [JsonProperty("data")]
@@ -384,9 +385,9 @@ namespace Otii {
         private class GetValueRequest : Request {
             public class GetValueRequestData : ArcRequestData {
                 [JsonProperty("channel")]
-                public string Channel { get; set; }
+                public Channel Channel { get; set; }
 
-                public GetValueRequestData(string deviceId, string channel) : base(deviceId) {
+                public GetValueRequestData(string deviceId, Channel channel) : base(deviceId) {
                     Channel = channel;
                 }
             }
@@ -394,7 +395,7 @@ namespace Otii {
             [JsonProperty("data")]
             public GetValueRequestData Data { get; set; }
 
-            public GetValueRequest(string deviceId, string channel) : base("arc_get_value") {
+            public GetValueRequest(string deviceId, Channel channel) : base("arc_get_value") {
                 Data = new GetValueRequestData(deviceId, channel);
             }
         }

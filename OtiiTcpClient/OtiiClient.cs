@@ -3,7 +3,7 @@ using System.IO;
 using System.Net.Sockets;
 using Newtonsoft.Json;
 
-namespace Otii {
+namespace OtiiTcpClient {
     /// <summary>
     /// OtiiClient is used to create a connection to an Otii TCP server using Connect.
     /// When connected the Otii API can be accessed through the property Otii.
@@ -21,6 +21,15 @@ namespace Otii {
         /// </summary>
         public Otii Otii { get { return _otii;  } }
 
+		public OtiiClient()
+		{
+		}
+
+		public OtiiClient(Otii otii){
+            _otii = otii;
+        }
+
+
         /// <summary>
         /// Connect to an Otii TCP Server
         /// </summary>
@@ -33,8 +42,6 @@ namespace Otii {
             var streamReader = new StreamReader(_stream, System.Text.Encoding.UTF8);
             var responseData = streamReader.ReadLine();
             ServerStatus status = JsonConvert.DeserializeObject<ServerStatus>(responseData);
-
-            _otii = new Otii(this);
         }
 
         /// <summary>

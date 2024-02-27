@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Otii {
+namespace OtiiTcpClient {
     public partial class Recording {
         private readonly OtiiClient _client;
         private readonly int _recordingId;

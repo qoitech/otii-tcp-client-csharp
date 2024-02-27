@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Otii {
+namespace OtiiTcpClient {
     public partial class Recording {
         private class RecordingRequestData {
             [JsonProperty("recording_id")]

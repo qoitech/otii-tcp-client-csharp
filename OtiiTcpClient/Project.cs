@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Otii {
+namespace OtiiTcpClient {
     public partial class Project {
         private readonly OtiiClient _client;
         private readonly int _projectId;

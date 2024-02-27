@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Otii {
+namespace OtiiTcpClient {
     public partial class Project {
         private class ProjectRequestData {
             [JsonProperty("project_id")]
