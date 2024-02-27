@@ -115,7 +115,7 @@ namespace Otii {
             }
         }
 
-        private class LogoutRequest: Request {
+        private class LogoutRequest : Request {
             public LogoutRequest() : base("otii_logout") {
             }
         }

@@ -69,89 +69,89 @@ namespace Otii {
         /// Enable or disable a measurement channel.
         /// <para><b>Available channels:</b></para>
         /// <list type="table">
-            /// <listheader>
-                /// <term>Channel</term>
-                /// <term>Description</term>
-                /// <term>Unit</term>
-            /// </listheader>
-            /// <item>
-                /// <term>mc</term>
-                /// <term>Main Current</term>
-                /// <term>A</term>
-            /// </item>
-            /// <item>
-                /// <term>mv</term>
-                /// <term>Main Voltage</term>
-                /// <term>V</term>
-            /// </item>
-            /// <item>
-                /// <term>ac</term>
-                /// <term>ADC Current</term>
-                /// <term>A</term>
-            /// </item>
-            /// <item>
-                /// <term>av</term>
-                /// <term>ADC Voltage</term>
-                /// <term>V</term>
-            /// </item>
-            /// <item>
-                /// <term>sv</term>
-                /// <term>Sense+ Voltage</term>
-                /// <term>V</term>
-            /// </item>
-            /// <item>
-                /// <term>sn</term>
-                /// <term>Sense- Voltage</term>
-                /// <term>V</term>
-            /// </item>
-            /// <item>
-                /// <term>vb</term>
-                /// <term>VBUS</term>
-                /// <term>V</term>
-            /// </item>
-            /// <item>
-                /// <term>vj</term>
-                /// <term>DC-Jack</term>
-                /// <term>V</term>
-            /// </item>
-            /// <item>
-                /// <term>tp</term>
-                /// <term>Temperature</term>
-                /// <term>°C</term>
-            /// </item>
-            /// <item>
-                /// <term>rx</term>
-                /// <term>UART Logs</term>
-                /// <term>Text</term>
-            /// </item>
-            /// <item>
-                /// <term>i1</term>
-                /// <term>GPI1</term>
-                /// <term>Digital</term>
-            /// </item>
-            /// <item>
-                /// <term>i2</term>
-                /// <term>GPI2</term>
-                /// <term>Digital</term>
-            /// </item>
+        ///     <listheader>
+        ///         <term>Channel</term>
+        ///         <term>Description</term>
+        ///         <term>Unit</term>
+        ///     </listheader>
+        ///     <item>
+        ///         <term>mc</term>
+        ///         <term>Main Current</term>
+        ///         <term>A</term>
+        ///     </item>
+        ///     <item>
+        ///         <term>mv</term>
+        ///         <term>Main Voltage</term>
+        ///         <term>V</term>
+        ///     </item>
+        ///     <item>
+        ///         <term>ac</term>
+        ///         <term>ADC Current</term>
+        ///         <term>A</term>
+        ///     </item>
+        ///     <item>
+        ///         <term>av</term>
+        ///         <term>ADC Voltage</term>
+        ///         <term>V</term>
+        ///     </item>
+        ///     <item>
+        ///         <term>sv</term>
+        ///         <term>Sense+ Voltage</term>
+        ///         <term>V</term>
+        ///     </item>
+        ///     <item>
+        ///         <term>sn</term>
+        ///         <term>Sense- Voltage</term>
+        ///         <term>V</term>
+        ///     </item>
+        ///     <item>
+        ///         <term>vb</term>
+        ///         <term>VBUS</term>
+        ///         <term>V</term>
+        ///     </item>
+        ///     <item>
+        ///         <term>vj</term>
+        ///         <term>DC-Jack</term>
+        ///         <term>V</term>
+        ///     </item>
+        ///     <item>
+        ///         <term>tp</term>
+        ///         <term>Temperature</term>
+        ///         <term>°C</term>
+        ///     </item>
+        ///     <item>
+        ///         <term>rx</term>
+        ///         <term>UART Logs</term>
+        ///         <term>Text</term>
+        ///     </item>
+        ///     <item>
+        ///         <term>i1</term>
+        ///         <term>GPI1</term>
+        ///         <term>Digital</term>
+        ///     </item>
+        ///     <item>
+        ///         <term>i2</term>
+        ///         <term>GPI2</term>
+        ///         <term>Digital</term>
+        ///     </item>
         /// </list>
         /// <para>In addition to above channels, two more channels are enabled automatically when their respective current channel is enabled:</para>
         /// <list type="table">
-            /// <listheader>
-                /// <term>Channel</term>
-                /// <term>Description</term>
-                /// <term>Unit</term>
-            /// </listheader>
-            /// <item>
-                /// <term>me</term>
-                /// <term>Main Energy</term>
-                /// <term>J</term>
-            /// </item>
-            /// <item>
-                /// <term>ae</term>
-                /// <term>ADC Energy</term>
-                /// <term>J</term>
-            /// </item>
+        ///     <listheader>
+        ///         <term>Channel</term>
+        ///         <term>Description</term>
+        ///         <term>Unit</term>
+        ///     </listheader>
+        ///     <item>
+        ///         <term>me</term>
+        ///         <term>Main Energy</term>
+        ///         <term>J</term>
+        ///     </item>
+        ///     <item>
+        ///         <term>ae</term>
+        ///         <term>ADC Energy</term>
+        ///         <term>J</term>
+        ///     </item>
         /// </list>
         /// </summary>
         /// <param name="channel">the channel to enable or disable.</param>

@@ -19,7 +19,7 @@ namespace Otii {
         /// <summary>
         /// The Otii API.
         /// </summary>
-        public Otii Otii { get { return _otii;  } }
+        public Otii Otii { get { return _otii; } }
 
         /// <summary>
         /// Connect to an Otii TCP Server

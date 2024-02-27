@@ -45,7 +45,7 @@ namespace Otii {
         /// <returns>a list of recordings.</returns>
         public Recording[] GetRecordings() {
             var request = new GetRecordingsRequest(_projectId);
-            var response =_client.PostRequest<GetRecordingsRequest, GetRecordingsResponse>(request);
+            var response = _client.PostRequest<GetRecordingsRequest, GetRecordingsResponse>(request);
             var recordings = response.Data.Recordings.Select(
                 recording => new Recording(_client, recording.RecordingId, recording.Name, recording.StartTime)
             );
