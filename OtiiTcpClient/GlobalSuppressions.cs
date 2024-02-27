@@ -5,4 +5,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-//[assembly: SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification = "Used for serialization.")]
+[assembly: SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification = "Used for serialization.")]
