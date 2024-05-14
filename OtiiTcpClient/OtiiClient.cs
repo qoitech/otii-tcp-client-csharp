@@ -61,21 +61,26 @@ namespace Otii {
             _stream.Write(data, 0, data.Length);
 
             var streamReader = new StreamReader(_stream, System.Text.Encoding.UTF8);
-            var responseData = streamReader.ReadLine();
-            if (responseData == null) {
-                throw new DisconnectedException();
+            while (true) {
+                var responseData = streamReader.ReadLine();
+                if (responseData == null) {
+                    throw new DisconnectedException();
+                }
+                if (log) {
+                    Console.Write(responseData.Substring(0, Math.Min(responseData.Length, 256)));
+                }
+                var response = JsonConvert.DeserializeObject<U>(responseData);
+                if (response.Type == "error") {
+                    throw new Exception(responseData);
+                }
+                if (response.Type == "progress") {
+                    continue;
+                }
+                if (response.TransId != request.TransId) {
+                    throw new Exception($"Trans id mismatch. request: {request.TransId}, response: {response.TransId}");
+                }
+                return response;
             }
-            if (log) {
-                Console.Write(responseData.Substring(0, Math.Min(responseData.Length, 256)));
-            }
-            var response = JsonConvert.DeserializeObject<U>(responseData);
-            if (response.Type == "error") {
-                throw new Exception(responseData);
-            }
-            if (response.TransId != request.TransId) {
-                throw new Exception("Trans id mismatch");
-            }
-            return response;
         }
 
         internal void PostRequest<T>(T request, bool log = false) where T : Request {
