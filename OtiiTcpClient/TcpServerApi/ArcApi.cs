@@ -200,6 +200,25 @@ namespace Otii {
             public GetGpiResponseData Data { get; set; }
         }
 
+        private class GetMainRequest : Request {
+            [JsonProperty("data")]
+            public ArcRequestData Data { get; set; }
+
+            public GetMainRequest(string deviceId) : base("arc_get_main") {
+                Data = new ArcRequestData(deviceId);
+            }
+        }
+
+        private class GetMainResponse : Response {
+            public class GetMainResponseData {
+                [JsonProperty("value")]
+                public bool Value { get; set; }
+            }
+
+            [JsonProperty("data")]
+            public GetMainResponseData Data { get; set; }
+        }
+
         private class GetMainVoltageRequest : Request {
             [JsonProperty("data")]
             public ArcRequestData Data { get; set; }

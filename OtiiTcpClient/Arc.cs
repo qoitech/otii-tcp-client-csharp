@@ -103,7 +103,7 @@ namespace Otii {
                 /// <term>V</term>
             /// </item>
             /// <item>
-                /// <term>sv</term>
+                /// <term>sp</term>
                 /// <term>Sense+ Voltage</term>
                 /// <term>V</term>
             /// </item>
@@ -218,6 +218,16 @@ namespace Otii {
         public bool GetGpi(int pin) {
             var request = new GetGpiRequest(DeviceId, pin);
             var response = _client.PostRequest<GetGpiRequest, GetGpiResponse>(request);
+            return response.Data.Value;
+        }
+
+        /// <summary>
+        /// Get main power status.
+        /// </summary>
+        /// <returns>true if power is on, otherwise false</returns>
+        public bool GetMain() {
+            var request = new GetMainRequest(DeviceId);
+            var response = _client.PostRequest<GetMainRequest, GetMainResponse>(request);
             return response.Data.Value;
         }
 
