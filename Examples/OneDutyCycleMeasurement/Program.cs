@@ -30,8 +30,7 @@ namespace Program {
             arc.EnableUart(true);
 
             arc.EnableChannel("mc", true);
-            arc.EnableChannel("me", true);
-            arc.EnableChannel("i1", true);
+            arc.EnableChannel("gpi1", true);
             arc.EnableChannel("rx", true);
 
             project.StartRecording();
@@ -53,25 +52,19 @@ namespace Program {
             var count = recording.GetChannelDataCount(arc.DeviceId, "rx");
             var rxData = recording.GetLogChannelData(arc.DeviceId, "rx", 0, count);
             var timestamps = rxData.Where(log => log.Value == "Waking up").Select(log => log.Timestamp).ToArray();
-            if (timestamps.Length < 3) {
+            if (timestamps.Length < 1) {
                 throw new Exception("Need at last three \"Waking up\" timestamps to be able to calulate the energy consumption for a period");
             }
             var timeFrom = timestamps[1];
             var timeTo = timestamps[2];
 
-            var indexFrom = recording.GetChannelDataIndex(arc.DeviceId, "me", timeFrom);
-            var indexTo = recording.GetChannelDataIndex(arc.DeviceId, "me", timeTo);
-
-            var energyFrom = recording.GetAnalogChannelData(arc.DeviceId, "me", indexFrom, 1);
-            var energyTo = recording.GetAnalogChannelData(arc.DeviceId, "me", indexTo, 1);
-
-            var energy = energyTo.Values[0] - energyFrom.Values[0];
-            return energy;
+            var statistics = recording.GetChannelStatistics(arc.DeviceId, "mc", timeFrom, timeTo);
+            return statistics.Energy;
         }
 
         static double ComputeEnergyFromGPI1(Arc arc, Recording recording) {
-            var count = recording.GetChannelDataCount(arc.DeviceId, "i1");
-            var data = recording.GetDigitalChannelData(arc.DeviceId, "i1", 0, count);
+            var count = recording.GetChannelDataCount(arc.DeviceId, "gpi1");
+            var data = recording.GetDigitalChannelData(arc.DeviceId, "gpi1", 0, count);
             var timestamps = data.Where(log => log.Value).Select(log => log.Timestamp).ToArray();
             if (timestamps.Length < 3) {
                 throw new Exception("Need at last three positive flank timestamps to be able to calulate the energy consumption for a period");
@@ -79,14 +72,8 @@ namespace Program {
             var timeFrom = timestamps[1];
             var timeTo = timestamps[2];
 
-            var indexFrom = recording.GetChannelDataIndex(arc.DeviceId, "me", timeFrom);
-            var indexTo = recording.GetChannelDataIndex(arc.DeviceId, "me", timeTo);
-
-            var energyFrom = recording.GetAnalogChannelData(arc.DeviceId, "me", indexFrom, 1);
-            var energyTo = recording.GetAnalogChannelData(arc.DeviceId, "me", indexTo, 1);
-
-            var energy = energyTo.Values[0] - energyFrom.Values[0];
-            return energy;
+            var statistics = recording.GetChannelStatistics(arc.DeviceId, "mc", timeFrom, timeTo);
+            return statistics.Energy;
         }
     }
 }
