@@ -65,6 +65,15 @@ namespace Otii {
         }
 
         /// <summary>
+        /// Enable the expansion supply with a given voltage.
+        /// </summary>
+        /// <param name="value">Voltage to set in V. Set to 0 to disable the supply.</param>
+        public void Enable5V(double value) {
+            var request = new Enable5VWithValueRequest(DeviceId, value);
+            _client.PostRequest(request);
+        }
+
+        /// <summary>
         /// Enables the expansion port.
         /// </summary>
         /// <param name="enable">true to enable and false to disable exp port.</param>

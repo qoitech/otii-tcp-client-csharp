@@ -70,6 +70,24 @@ namespace Otii {
             }
         }
 
+        private class Enable5VWithValueRequest : Request {
+            public class Enable5VWithValueRequestData : ArcRequestData {
+                [JsonProperty("enable")]
+                public double Enable { get; set; }
+
+                public Enable5VWithValueRequestData(string deviceId, double enable) : base(deviceId) {
+                    Enable = enable;
+                }
+            }
+
+            [JsonProperty("data")]
+            public Enable5VWithValueRequestData Data { get; set; }
+
+            public Enable5VWithValueRequest(string deviceId, double value) : base("arc_enable_5v") {
+                Data = new Enable5VWithValueRequestData(deviceId, value);
+            }
+        }
+
         private class EnableExpPortRequest : Request {
             [JsonProperty("data")]
             public EnableRequestData Data { get; set; }
