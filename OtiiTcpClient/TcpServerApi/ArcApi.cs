@@ -402,6 +402,17 @@ namespace Otii {
             public IsConnectedResponseData Data { get; set; }
         }
 
+        private class Set0To15VoltageRequest : Request
+        {
+            [JsonProperty("data")]
+            public SetDoubleRequestData Data { get; set; }
+
+            public Set0To15VoltageRequest(string deviceId, double value) : base("arc_set_0-15_voltage")
+            {
+                Data = new SetDoubleRequestData(deviceId, value);
+            }
+        }
+
         private class Set4WireRequest : Request {
             [JsonProperty("data")]
             public EnableRequestData Data { get; set; }

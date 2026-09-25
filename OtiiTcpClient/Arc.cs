@@ -325,6 +325,15 @@ namespace Otii {
         }
 
         /// <summary>
+        /// Set voltage of 0-15 pin in Ace (available from Otii version 3.7.3).
+        /// </summary>
+        /// <param name="value">voltage in V (0 to 15V), 0 turns off the output.</param>
+        public void Set0To15Voltage(double value) {
+            var request = new Set0To15VoltageRequest(DeviceId, value);
+            _client.PostRequest(request);
+        }
+
+        /// <summary>
         /// Enable/disable 4-wire measurements using Sense+/- (available from otii version 2.7.1).
         /// </summary>
         /// <param name="enable">true to enable 4-wire, false to disable.</param>
